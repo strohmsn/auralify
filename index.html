@@ -28,17 +28,23 @@
 			},
 			onsuccess: function() {
 				console.log("Init success!");
-				MIDI.setVolume(0, 127); // Set the volume
+				MIDI.setVolume(0, 127);
 			}
 		});
 	};
 	
-	var delay = 1000; // play one note every quarter second
+	var speed = 2000; // play one note every 2000 ms
 	var note = 45; // the MIDI start note
 	var velocity = 127; // how hard the note hits
-	var intervals = [2, 1, 2 , 2, 1, 2, 2] // intervals (in this case for natural minor scale
+	
+	var intervalsMajor = [2, 2, 1, 2, 2, 2, 1] // intervals for the major scale
+	var intervalsNaturalMinor = [2, 1, 2, 2, 1, 2, 2] // intervals for the natural minor scale
+	var intervalsMelodicMinor = [2, 1, 2, 2, 2, 2, 1] // intervals for the melodic minor scale
+	
+	var intervals = intervalsMajor;
 	var scale = [];
 	var cadence = [];
+	var running = false;
 	
 	function calculateScale(numberOfOctaves) {
 		var scale = [note];
@@ -55,9 +61,10 @@
 	}
 	
 	function calculateCadence() {
-		var tonic = [scale[0], scale[2], scale[4]];
-		var subdominant = [scale[3], scale[5], scale[7]];
-		var dominant = [scale[4], scale[6], scale[8]];
+		var scaleForCadence = calculateScale(2);
+		var tonic = [scaleForCadence[0], scaleForCadence[2], scaleForCadence[4]];
+		var subdominant = [scaleForCadence[3], scaleForCadence[5], scaleForCadence[7]];
+		var dominant = [scaleForCadence[4], scaleForCadence[6], scaleForCadence[8]];
 		
 		return [tonic, subdominant, dominant, tonic];
 	}
@@ -74,6 +81,7 @@
 			console.log("Playing chord " + noteToPlay + " (" + MIDI.noteToKey[noteToPlay[0]] + "," + MIDI.noteToKey[noteToPlay[1]] + "," + MIDI.noteToKey[noteToPlay[2]] + ")");
 		} else {
 			MIDI.noteOn(0, noteToPlay, velocity, 0);
+			// TODO: Add scale degree?
 			console.log("Playing note " + noteToPlay + " (" + MIDI.noteToKey[noteToPlay] + ")");
 		}
 			
@@ -86,15 +94,18 @@
 			
 			// Play next note/chord
 			noteNumber++;			
-			if (noteNumber < notesToPlay.length) {
+			if (running && noteNumber < notesToPlay.length) {
 				playNotes(notesToPlay, noteNumber);
 			}
-		}, delay);
+		}, speed);
 	}
 
 	function start() {
-		scale = calculateScale(2);
+		console.log("Started");
+		running = true;
+		
 		cadence = calculateCadence();
+		scale = calculateScale(1);
 		
 		notesToPlay = cadence;
 				
@@ -106,7 +117,8 @@
 	}
 	
 	function stop() {
-		MIDI.stopAllNotes();
+		running = false;
+		console.log("Stopped");
 	}
 	
 	</script>
