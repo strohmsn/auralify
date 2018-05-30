@@ -79,7 +79,7 @@
 		if (Array.isArray(noteToPlay)) {
 			MIDI.chordOn(0, noteToPlay, velocity, 0);
 			console.log("Playing chord " + noteToPlay + " (" + MIDI.noteToKey[noteToPlay[0]] + "," + MIDI.noteToKey[noteToPlay[1]] + "," + MIDI.noteToKey[noteToPlay[2]] + ")");
-		} else {
+		} else if (typeof(noteToPlay) === "number") {
 			MIDI.noteOn(0, noteToPlay, velocity, 0);
 			// TODO: Add scale degree?
 			console.log("Playing note " + noteToPlay + " (" + MIDI.noteToKey[noteToPlay] + ")");
@@ -88,9 +88,9 @@
 		setTimeout(function() {
 			if (Array.isArray(noteToPlay)) {
 				MIDI.chordOff(0, noteToPlay, 0);
-			} else {
+			} else if (typeof(noteToPlay) === "number") {
 				MIDI.noteOff(0, notesToPlay[noteNumber], 0);
-			}
+			}		
 			
 			// Play next note/chord
 			noteNumber++;			
@@ -108,6 +108,8 @@
 		scale = calculateScale(1);
 		
 		notesToPlay = cadence;
+		
+		notesToPlay.push(null);
 				
 		for (var i = 0; i < 12; i++) {
 			notesToPlay.push(getRandomNoteFromScale());
