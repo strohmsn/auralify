@@ -1,21 +1,22 @@
 var player = new Vue({
 	el: '#app',
 	data: {
-		volume: 127, // general volume of the midi output
-		speed: 2000, // play one note every x milliseconds
-		rootNote: 45, // the MIDI root note
-		velocity: 127, // how hard the note hits
-			
-		scaleIntervalsList: [
+		volume: 0, // general volume of the midi output
+		speed: 0, // play one note every x milliseconds
+		velocity: 0, // how hard the note hits
+		
+		rootNotes: [], // the root note for the scale
+		
+		scaleIntervalsList: [ // selectable scales
 			{ name: "Major", intervals: [2, 2, 1, 2, 2, 2, 1] },
 			{ name: "Natural minor", intervals: [2, 1, 2, 2, 1, 2, 2] },
 			{ name: "Melodic minor", intervals: [2, 1, 2, 2, 2, 2, 1] },
 			{ name: "Phrygian", intervals: [1, 2, 2, 2, 1, 2, 2] }
 		],
-		
-		rootNotes: [],
-	
+			
+		selectedRootNote: 0,
 		selectedScaleIntervals: [],
+		
 		scale: [],
 		cadence: [],
 		running: false
@@ -24,7 +25,6 @@ var player = new Vue({
 		init: function(options, afterInit) {
 			this.volume = options.volume;
 			this.speed = options.speed;
-			this.rootNote = options.rootNote;
 			this.velocity = options.velocity;
 			
 			this.rootNotes = [];
@@ -32,6 +32,7 @@ var player = new Vue({
 				this.rootNotes.push({ name: MIDI.noteToKey[rootNote], value: rootNote });
 			}
 			
+			this.selectedRootNote = this.rootNotes[24].value;
 			this.selectedScaleIntervals = this.scaleIntervalsList[0].intervals;
 			
 			MIDI.loadPlugin({
@@ -51,8 +52,8 @@ var player = new Vue({
 			});
 		},
 		calculateScale: function (numberOfOctaves) {
-			var scale = [this.rootNote];
-			var nextNote = this.rootNote;
+			var scale = [this.selectedRootNote];
+			var nextNote = this.selectedRootNote;
 			for (var octave = 0; octave < numberOfOctaves; octave++) {
 				for (var interval = 0; interval < this.selectedScaleIntervals.length; interval++) {
 					nextNote += this.selectedScaleIntervals[interval];

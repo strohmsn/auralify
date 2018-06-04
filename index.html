@@ -23,12 +23,12 @@
 <body>
 	<div id="app">
 		<div>
-			<select v-model="note">
+			<select v-model="selectedRootNote" @change="stop">
 				<option v-for="rootNote in rootNotes" v-bind:value="rootNote.value">
 					{{ rootNote.name }}
 				</option>
 			</select>
-			<span>Selected: {{ note }}</span>
+			<span>Selected: {{ selectedRootNote }}</span>
 		</div>
 		<div>
 			<select v-model="selectedScaleIntervals" @change="stop">
@@ -51,9 +51,8 @@
 	<script type="text/javascript">
 		var volume = 127;
 		var speed = 2000; 
-		var rootNote = 45;
 		var velocity = 127;
-		player.init({volume: volume, speed: speed, rootNote: rootNote, velocity: velocity});
+		player.init({volume: volume, speed: speed, velocity: velocity});
 	</script>
 </body>
 </html>
