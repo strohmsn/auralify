@@ -24,7 +24,7 @@
 	<div id="app">
 		<div>
 			<select v-model="selectedRootNote" @change="stop">
-				<option v-for="rootNote in rootNotes" v-bind:value="rootNote.value">
+				<option v-for="rootNote in rootNotes" v-bind:value="rootNote">
 					{{ rootNote.name }}
 				</option>
 			</select>
@@ -43,14 +43,20 @@
 			<label for="speedSlider">Speed</label>
 		</div>
 		
-		<button v-on:click="start">Start</button>
-		<button v-on:click="stop">Stop</button>
+		<div>
+			<button v-on:click="start">Start</button>
+			<button v-on:click="stop">Stop</button>
+		</div>
+		
+		<span v-for="playedNote in playedNotes">
+			{{ playedNote }}
+		</span>
 	</div>
 	
 	<script src="midi-scales-player.js"></script>
 	<script type="text/javascript">
 		var volume = 127;
-		var speed = 2000; 
+		var speed = 500; 
 		var velocity = 127;
 		player.init({volume: volume, speed: speed, velocity: velocity});
 	</script>

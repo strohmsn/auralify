@@ -19,6 +19,9 @@ var player = new Vue({
 		
 		scale: [],
 		cadence: [],
+		
+		playedNotes: [],
+		
 		running: false
 	},
 	methods: {
@@ -32,7 +35,7 @@ var player = new Vue({
 				this.rootNotes.push({ name: MIDI.noteToKey[rootNote], value: rootNote });
 			}
 			
-			this.selectedRootNote = this.rootNotes[24].value;
+			this.selectedRootNote = this.rootNotes[24];
 			this.selectedScaleIntervals = this.scaleIntervalsList[0].intervals;
 			
 			MIDI.loadPlugin({
@@ -56,12 +59,12 @@ var player = new Vue({
 			var nextNote = this.selectedRootNote;
 			for (var octave = 0; octave < numberOfOctaves; octave++) {
 				for (var interval = 0; interval < this.selectedScaleIntervals.length; interval++) {
-					nextNote += this.selectedScaleIntervals[interval];
+					nextNote = { name: MIDI.noteToKey[nextNote.value + this.selectedScaleIntervals[interval]], value: nextNote.value + this.selectedScaleIntervals[interval] };
 					scale.push(nextNote);
 				}
 			}
 			
-			console.log("Scale: " + scale);
+			console.log("Scale: " + JSON.stringify(scale));
 			return scale;
 		},
 		calculateCadence: function() {
@@ -78,19 +81,21 @@ var player = new Vue({
 		playNotes: function(notesToPlay, noteNumber) {	
 			var noteToPlay = notesToPlay[noteNumber];
 		
-			if (Array.isArray(noteToPlay)) {
-				MIDI.chordOn(0, noteToPlay, velocity, 0);
-				console.log("Playing chord " + noteToPlay + " (" + MIDI.noteToKey[noteToPlay[0]] + "," + MIDI.noteToKey[noteToPlay[1]] + "," + MIDI.noteToKey[noteToPlay[2]] + ")");
-			} else if (typeof(noteToPlay) === "number") {
-				MIDI.noteOn(0, noteToPlay, velocity, 0);
-				console.log("Playing note " + noteToPlay + " (" + MIDI.noteToKey[noteToPlay] + ")");
+			if (noteToPlay && Array.isArray(noteToPlay)) {
+				MIDI.chordOn(0, [noteToPlay[0].value, noteToPlay[1].value, noteToPlay[2].value], velocity, 0);
+				// TODO: Add chords to played notes?
+				console.log("Playing chord " + noteToPlay[0].name + "," + noteToPlay[1].name + "," + noteToPlay[2].name);
+			} else if (noteToPlay && typeof(noteToPlay.value) === "number") {
+				MIDI.noteOn(0, noteToPlay.value, velocity, 0);
+				this.playedNotes.push(noteToPlay);
+				console.log("Playing note " + noteToPlay.name);
 			}
 				
 			setTimeout(() => {
-				if (Array.isArray(noteToPlay)) {
-					MIDI.chordOff(0, noteToPlay, 0);
-				} else if (typeof(noteToPlay) === "number") {
-					MIDI.noteOff(0, notesToPlay[noteNumber], 0);
+				if (noteToPlay && Array.isArray(noteToPlay)) {
+					MIDI.chordOff(0,[noteToPlay[0].value, noteToPlay[1].value, noteToPlay[2].value], 0);
+				} else if (noteToPlay && typeof(noteToPlay.value) === "number") {
+					MIDI.noteOff(0, notesToPlay[noteNumber].value, 0);
 				}		
 				
 				// Play next note/chord
@@ -102,6 +107,7 @@ var player = new Vue({
 		},
 		start: function() {
 			console.log("Started");
+			this.playedNotes = [];
 			this.running = true;
 
 			this.cadence = this.calculateCadence();
@@ -111,7 +117,7 @@ var player = new Vue({
 			
 			// Add rest
 			notesToPlay.push(null);
-					
+			
 			for (var i = 0; i < 12; i++) {
 				notesToPlay.push(this.getRandomNoteFromScale());
 			}
@@ -120,6 +126,7 @@ var player = new Vue({
 		},
 		stop: function() {
 			this.running = false;
+			this.playedNotes = [];
 			console.log("Stopped");
 		}	
 	}
