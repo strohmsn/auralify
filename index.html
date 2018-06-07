@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>MIDI Scales Player</title>
 	<!-- polyfill -->
 	<script src="midi-js/inc/shim/Base64.js" type="text/javascript"></script>
 	<script src="midi-js/inc/shim/Base64binary.js" type="text/javascript"></script>
@@ -16,7 +17,7 @@
 	<!-- utils -->
 	<script src="midi-js/js/util/dom_request_xhr.js" type="text/javascript"></script>
 	<script src="midi-js/js/util/dom_request_script.js" type="text/javascript"></script>
-	
+
 	<!-- vue.js -->
 	<script src="vue.js"></script>
 </head>
@@ -42,21 +43,21 @@
 			<input id="speedSlider" type="range" min="500" max="2000" v-model="speed" />
 			<label for="speedSlider">Speed</label>
 		</div>
-		
+
 		<div>
 			<button v-on:click="start">Start</button>
 			<button v-on:click="stop">Stop</button>
 		</div>
-		
+
 		<div v-for="playedNote in playedNotes">
 			Degree: {{ playedNote.degree }}
 		</div>
 	</div>
-	
+
 	<script src="midi-scales-player.js"></script>
 	<script type="text/javascript">
 		var volume = 127;
-		var speed = 500; 
+		var speed = 500;
 		var velocity = 127;
 		player.init({volume: volume, speed: speed, velocity: velocity});
 	</script>

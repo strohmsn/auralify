@@ -1,0 +1,10 @@
+# NODE/NPM
+node_modules*
+npm-debug.log
+
+# MIDI.js
+midi-js*
+
+# vue.js
+vue.js
+
