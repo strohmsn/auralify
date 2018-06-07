@@ -32,7 +32,7 @@ var player = new Vue({
 			
 			this.rootNotes = [];
 			for (var rootNote = 21; rootNote < 108; rootNote++) {
-				this.rootNotes.push({ name: MIDI.noteToKey[rootNote], value: rootNote });
+				this.rootNotes.push({ name: MIDI.noteToKey[rootNote], degree: 1, value: rootNote });
 			}
 			
 			this.selectedRootNote = this.rootNotes[24];
@@ -59,7 +59,11 @@ var player = new Vue({
 			var nextNote = this.selectedRootNote;
 			for (var octave = 0; octave < numberOfOctaves; octave++) {
 				for (var interval = 0; interval < this.selectedScaleIntervals.length; interval++) {
-					nextNote = { name: MIDI.noteToKey[nextNote.value + this.selectedScaleIntervals[interval]], value: nextNote.value + this.selectedScaleIntervals[interval] };
+					nextNote = { 
+						name: MIDI.noteToKey[nextNote.value + this.selectedScaleIntervals[interval]],
+						degree: (nextNote.degree % 7) + 1,
+						value: nextNote.value + this.selectedScaleIntervals[interval]
+					};
 					scale.push(nextNote);
 				}
 			}
@@ -111,7 +115,7 @@ var player = new Vue({
 			this.running = true;
 
 			this.cadence = this.calculateCadence();
-			this.scale = this.calculateScale(1);
+			this.scale = this.calculateScale(2);
 			
 			var notesToPlay = this.cadence;
 			

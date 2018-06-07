@@ -48,9 +48,9 @@
 			<button v-on:click="stop">Stop</button>
 		</div>
 		
-		<span v-for="playedNote in playedNotes">
-			{{ playedNote }}
-		</span>
+		<div v-for="playedNote in playedNotes">
+			Degree: {{ playedNote.degree }}
+		</div>
 	</div>
 	
 	<script src="midi-scales-player.js"></script>
