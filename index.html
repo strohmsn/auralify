@@ -20,10 +20,27 @@
 
 	<!-- vue.js -->
 	<script src="vue.js"></script>
+
+	<style>
+		div.note {
+			display: inline-block;
+			padding: 5px;
+			margin: 2px;
+		}
+
+		div.noteActive {
+			border: 2px solid red;
+		}
+
+		div.noteInactive {
+			border: 2px solid black;
+		}
+	</style>
 </head>
 <body>
 	<div id="app">
 		<div>
+			<label>Root note: </label>
 			<select v-model="selectedRootNote" @change="stop">
 				<option v-for="rootNote in rootNotes" v-bind:value="rootNote">
 					{{ rootNote.name }}
@@ -32,6 +49,16 @@
 			<span>Selected: {{ selectedRootNote }}</span>
 		</div>
 		<div>
+			<label>Number of octaves</label>
+			<select v-model="selectedNumberOfOctaves" @change="stop">
+				<option v-for="octave in octavesList" v-bind:value="octave">
+					{{ octave }}
+				</option>
+			</select>
+			Selected: {{ selectedNumberOfOctaves }}
+		</div>
+		<div>
+			<label>Scale: </label>
 			<select v-model="selectedScaleIntervals" @change="stop">
 				<option v-for="scaleInterval in scaleIntervalsList" v-bind:value="scaleInterval.intervals">
 					{{ scaleInterval.name }}
@@ -40,8 +67,8 @@
 			<span>Selected: {{ selectedScaleIntervals }}</span>
 		</div>
 		<div>
+			<label>Speed: </label>
 			<input id="speedSlider" type="range" min="500" max="2000" v-model="speed" />
-			<label for="speedSlider">Speed</label>
 		</div>
 
 		<div>
@@ -49,15 +76,15 @@
 			<button v-on:click="stop">Stop</button>
 		</div>
 
-		<div v-for="playedNote in playedNotes">
-			Degree: {{ playedNote.degree }}
+		<div v-for="note in scale" class="note" v-bind:class="{ noteInactive: !note.active, noteActive: note.active }">
+			{{ note.degree }}: {{ note.name }}
 		</div>
 	</div>
 
 	<script src="midi-scales-player.js"></script>
 	<script type="text/javascript">
 		var volume = 127;
-		var speed = 500;
+		var speed = 1000;
 		var velocity = 127;
 		player.init({volume: volume, speed: speed, velocity: velocity});
 	</script>
