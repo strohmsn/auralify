@@ -1,0 +1,30 @@
+{
+  "name": "midi-scales-player",
+  "version": "0.0.1",
+  "description": "A website for playing scales using the Web MIDI API.",
+  "main": "midi-scales-player.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strohmsn/midi-scales-player.git"
+  },
+  "keywords": [
+    "web",
+    "midi",
+    "api",
+    "scales",
+    "music"
+  ],
+  "author": "strohmsn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/strohmsn/midi-scales-player/issues"
+  },
+  "homepage": "https://github.com/strohmsn/midi-scales-player#readme",
+  "dependencies": {
+    "vue": "^2.5.16",
+    "bootstrap": "^4.1.1"
+  }
+}
