@@ -72,8 +72,8 @@
 		</div>
 
 		<div>
-			<button v-on:click="start">Start</button>
-			<button v-on:click="stop">Stop</button>
+			<button v-if="!running" v-on:click="start" >Start</button>
+			<button v-if="running" v-on:click="stop">Stop</button>
 		</div>
 
 		<div v-for="note in scale" class="note" v-bind:class="{ noteInactive: !note.active, noteActive: note.active }">
