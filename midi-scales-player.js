@@ -2,7 +2,7 @@ var player = new Vue({
 	el: '#app',
 	data: {
 		volume: 0, // general volume of the midi output
-		speed: 0, // play one note every x milliseconds
+		bpm: 0, // beats per minute
 		velocity: 0, // how hard the note hits
 
 		rootNotes: [], // the possible root notes for the scale
@@ -26,10 +26,15 @@ var player = new Vue({
 
 		running: false
 	},
+	computed: {
+		speed: function() {
+			return Math.floor((60  / this.bpm) * 1000); // Convert bpm to milliseconds
+		}
+	},
 	methods: {
 		init: function(options, afterInit) {
 			this.volume = options.volume;
-			this.speed = options.speed;
+			this.bpm = options.bpm;
 			this.velocity = options.velocity;
 
 			this.rootNotes = [];
@@ -111,6 +116,9 @@ var player = new Vue({
 				noteNumber++;
 				if (this.running && noteNumber < notesToPlay.length) {
 					this.playNotes(notesToPlay, noteNumber);
+				} else {
+					// Stop if no more note/chord
+					this.stop();
 				}
 			}, this.speed);
 		},
