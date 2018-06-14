@@ -53,35 +53,32 @@
 					{{ rootNote.name }}
 				</option>
 			</select>
-			<span>Selected: {{ selectedRootNote }}</span>
 		</div>
 		<div>
-			<label>Number of octaves</label>
+			<label>Number of octaves:</label>
 			<select v-model="selectedNumberOfOctaves" @change="stop">
 				<option v-for="octave in octavesList" v-bind:value="octave">
 					{{ octave }}
 				</option>
 			</select>
-			Selected: {{ selectedNumberOfOctaves }}
 		</div>
 		<div>
-			<label>Scale: </label>
+			<label>Scale:</label>
 			<select v-model="selectedScaleIntervals" @change="stop">
 				<option v-for="scaleInterval in scaleIntervalsList" v-bind:value="scaleInterval.intervals">
 					{{ scaleInterval.name }}
 				</option>
 			</select>
-			<span>Selected: {{ selectedScaleIntervals }}</span>
 		</div>
 		<div>
-			<label>Tempo: </label>
+			<label>Tempo:</label>
 			<input id="bpm" type="range" min="40" max="200" v-model="bpm" />
 			<span>{{ bpm }} BPM</span>
 		</div>
 
 		<div>
-			<button v-if="!running" v-on:click="start" >Start</button>
-			<button v-if="running" v-on:click="stop">Stop</button>
+			<button type="button" class="btn btn-primary" v-if="!running" v-on:click="start">Start</button>
+			<button type="button" class="btn btn-primary" v-if="running" v-on:click="stop">Stop</button>
 		</div>
 
 		<div v-for="note in scale" class="note" v-bind:class="{ noteInactive: !note.active, noteActive: note.active }">
