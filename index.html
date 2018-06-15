@@ -30,59 +30,57 @@
 	<style>
 		div.note {
 			display: inline-block;
-			padding: 5px;
-			margin: 2px;
-		}
-
-		div.noteActive {
-			border: 2px solid red;
-		}
-
-		div.noteInactive {
-			border: 2px solid black;
+			width: 8rem;
 		}
 	</style>
 </head>
 <body>
-	<h1>MIDI Scales Player</h1>
-	<div id="app">
-		<div>
-			<label>Root note: </label>
-			<select v-model="selectedRootNote" @change="stop">
+	<div id="app" class="container">
+		<div class="row">
+			<h1>MIDI Scales Player</h1>
+		</div>
+		<div class="row mt-3">
+			<label for="root-note-select">Root note:</label>
+			<select id="root-note-select" v-model="selectedRootNote" @change="stop" class="form-control">
 				<option v-for="rootNote in rootNotes" v-bind:value="rootNote">
 					{{ rootNote.name }}
 				</option>
 			</select>
 		</div>
-		<div>
-			<label>Number of octaves:</label>
-			<select v-model="selectedNumberOfOctaves" @change="stop">
+		<div class="row mt-3">
+			<label for="octave-select">Number of octaves:</label>
+			<select id="octave-select" v-model="selectedNumberOfOctaves" @change="stop" class="form-control">
 				<option v-for="octave in octavesList" v-bind:value="octave">
 					{{ octave }}
 				</option>
 			</select>
 		</div>
-		<div>
-			<label>Scale:</label>
-			<select v-model="selectedScaleIntervals" @change="stop">
+		<div class="row mt-3">
+			<label for="scale-select">Scale:</label>
+			<select id="scale-select" v-model="selectedScaleIntervals" @change="stop" class="form-control">
 				<option v-for="scaleInterval in scaleIntervalsList" v-bind:value="scaleInterval.intervals">
 					{{ scaleInterval.name }}
 				</option>
 			</select>
 		</div>
-		<div>
-			<label>Tempo:</label>
-			<input id="bpm" type="range" min="40" max="200" v-model="bpm" />
-			<span>{{ bpm }} BPM</span>
+		<div class="row mt-3">
+		  <label for="bpm-input">Tempo:</label>
+			<input id="bpm-input" type="range" min="40" max="200" v-model="bpm" class="form-control"/>
+			<span class="form-control text-center">{{ bpm }} BPM</span>
 		</div>
 
-		<div>
-			<button type="button" class="btn btn-primary" v-if="!running" v-on:click="start">Start</button>
-			<button type="button" class="btn btn-primary" v-if="running" v-on:click="stop">Stop</button>
+		<div class="row mt-4">
+			<button type="button" class="btn btn-primary btn-block" v-if="!running" v-on:click="start">Start</button>
+			<button type="button" class="btn btn-primary btn-block" v-if="running" v-on:click="stop">Stop</button>
 		</div>
 
-		<div v-for="note in scale" class="note" v-bind:class="{ noteInactive: !note.active, noteActive: note.active }">
-			{{ note.degree }}: {{ note.name }}
+		<div class="row">
+			<div v-for="note in scale" class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
+				<div class="card-body">
+					<h4 class="card-title text-center">{{ note.degree }}</h4>
+					<p class="card-text text-center">{{ note.name }}</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
