@@ -21,8 +21,7 @@ var player = new Vue({
 
 		scale: [],
 		cadence: [],
-
-		playedNotes: [],
+		notesToPlay: [],
 
 		running: false
 	},
@@ -95,12 +94,10 @@ var player = new Vue({
 
 			if (noteToPlay && Array.isArray(noteToPlay)) {
 				MIDI.chordOn(0, [noteToPlay[0].value, noteToPlay[1].value, noteToPlay[2].value], velocity, 0);
-				// TODO: Add chords to played notes?
 				console.log("Playing chord " + noteToPlay[0].name + "," + noteToPlay[1].name + "," + noteToPlay[2].name);
 			} else if (noteToPlay && typeof(noteToPlay.value) === "number") {
 				MIDI.noteOn(0, noteToPlay.value, velocity, 0);
 				noteToPlay.active = true;
-				this.playedNotes.push(noteToPlay);
 				console.log("Playing note " + noteToPlay.name);
 			}
 
@@ -112,38 +109,44 @@ var player = new Vue({
 					noteToPlay.active = false;
 				}
 
-				// Play next note/chord
 				noteNumber++;
 				if (this.running && noteNumber < notesToPlay.length) {
+	 				// Play next note/chord
+					this.playNotes(notesToPlay, noteNumber);
+				} else if (this.running && noteNumber == notesToPlay.length) {
+					// Add more notes and play next note
+					this.addNotesToPlay();
 					this.playNotes(notesToPlay, noteNumber);
 				} else {
-					// Stop if no more note/chord
+					// Stop playing
 					this.stop();
 				}
 			}, this.speed);
 		},
+		addNotesToPlay: function() {
+			console.log("Adding notes to play");
+			for (var i = 0; i < 16; i++) {
+				this.notesToPlay.push(this.getRandomNoteFromScale());
+			}
+		},
 		start: function() {
 			console.log("Started");
-			this.playedNotes = [];
 			this.running = true;
 
 			this.cadence = this.calculateCadence();
 			this.scale = this.calculateScale(this.selectedNumberOfOctaves);
 
-			var notesToPlay = this.cadence;
+			this.notesToPlay = this.cadence;
 
 			// Add rest
-			notesToPlay.push(null);
+			this.notesToPlay.push(null);
 
-			for (var i = 0; i < 12; i++) {
-				notesToPlay.push(this.getRandomNoteFromScale());
-			}
+			this.addNotesToPlay();
 
-			this.playNotes(notesToPlay, 0);
+			this.playNotes(this.notesToPlay, 0);
 		},
 		stop: function() {
 			this.running = false;
-			this.playedNotes = [];
 			console.log("Stopped");
 		}
 	}
