@@ -65,7 +65,7 @@
 		</div>
 		<div class="row mt-3">
 		  <label for="bpm-input">Tempo:</label>
-			<input id="bpm-input" type="range" min="40" max="200" v-model="bpm" class="form-control"/>
+			<input id="bpm-input" type="range" min="30" max="200" v-model="bpm" class="form-control"/>
 			<span class="form-control text-center">{{ bpm }} BPM</span>
 		</div>
 
@@ -87,7 +87,7 @@
 	<script src="midi-scales-player.js"></script>
 	<script type="text/javascript">
 		var volume = 127;
-		var bpm = 60;
+		var bpm = 40;
 		var velocity = 127;
 		player.init({volume: volume, bpm: bpm, velocity: velocity});
 	</script>
