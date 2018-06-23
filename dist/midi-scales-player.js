@@ -11,6 +11,7 @@ var player = new Vue({
 		scaleIntervalsList: [ // selectable scales
 			{ name: "Major", intervals: [2, 2, 1, 2, 2, 2, 1] },
 			{ name: "Natural minor", intervals: [2, 1, 2, 2, 1, 2, 2] },
+			{ name: "Harmonic minor", intervals: [2, 1, 2, 2, 1, 3, 1] },
 			{ name: "Melodic minor", intervals: [2, 1, 2, 2, 2, 2, 1] },
 			{ name: "Phrygian", intervals: [1, 2, 2, 2, 1, 2, 2] }
 		],
