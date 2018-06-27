@@ -35,7 +35,7 @@
 
 		div.note {
 			display: inline-block;
-			width: 5rem;
+			width: 4.5rem;
 		}
 	</style>
 </head>
@@ -81,7 +81,7 @@
 		</div>
 
 		<div class="row">
-			<div v-for="note in scale" class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
+			<div v-for="note in degrees" class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
 				<div class="card-body">
 					<h4 class="card-title text-center">{{ note.degree }}</h4>
 					<p class="card-text text-center">{{ note.name }}</p>
