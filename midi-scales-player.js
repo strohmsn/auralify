@@ -24,6 +24,8 @@ var player = new Vue({
 		cadence: [],
 		notesToPlay: [],
 
+		degrees: [],
+
 		running: false
 	},
 	computed: {
@@ -98,7 +100,7 @@ var player = new Vue({
 				console.log("Playing chord " + noteToPlay[0].name + "," + noteToPlay[1].name + "," + noteToPlay[2].name);
 			} else if (noteToPlay && typeof(noteToPlay.value) === "number") {
 				MIDI.noteOn(0, noteToPlay.value, velocity, 0);
-				noteToPlay.active = true;
+				this.degrees[noteToPlay.degree - 1].active = true;
 				console.log("Playing note " + noteToPlay.name);
 			}
 
@@ -107,7 +109,7 @@ var player = new Vue({
 					MIDI.chordOff(0,[noteToPlay[0].value, noteToPlay[1].value, noteToPlay[2].value], 0);
 				} else if (noteToPlay && typeof(noteToPlay.value) === "number") {
 					MIDI.noteOff(0, notesToPlay[noteNumber].value, 0);
-					noteToPlay.active = false;
+					this.degrees[noteToPlay.degree - 1].active = false;
 				}
 
 				noteNumber++;
@@ -136,6 +138,7 @@ var player = new Vue({
 
 			this.cadence = this.calculateCadence();
 			this.scale = this.calculateScale(this.selectedNumberOfOctaves);
+			this.degrees = this.calculateScale(1);
 
 			this.notesToPlay = this.cadence;
 
