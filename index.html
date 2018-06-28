@@ -32,11 +32,6 @@
 		#app {
 			max-width: 970px;
 		}
-
-		div.note {
-			display: inline-block;
-			width: 4.5rem;
-		}
 	</style>
 </head>
 
@@ -80,11 +75,13 @@
 			<button type="button" class="btn btn-primary btn-block" v-if="running" v-on:click="stop">Stop</button>
 		</div>
 
-		<div class="row">
-			<div v-for="note in degrees" class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
-				<div class="card-body">
-					<h4 class="card-title text-center">{{ note.degree }}</h4>
-					<p class="card-text text-center">{{ note.name }}</p>
+		<div class="row no-gutters">
+			<div v-for="note in degrees" class="col">
+				<div class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
+					<div class="card-body">
+						<h4 class="card-title text-center">{{ note.degree }}</h4>
+						<p class="card-text text-center">{{ note.name }}</p>
+					</div>
 				</div>
 			</div>
 		</div>
