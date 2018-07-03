@@ -70,7 +70,7 @@ var player = new Vue({
 				for (var interval = 0; interval < this.selectedScaleIntervals.length; interval++) {
 					nextNote = {
 						name: MIDI.noteToKey[nextNote.value + this.selectedScaleIntervals[interval]],
-						degree: (nextNote.degree % 7) + 1,
+						degree: (nextNote.degree % 8) + 1,
 						value: nextNote.value + this.selectedScaleIntervals[interval],
 						active: false
 					};
