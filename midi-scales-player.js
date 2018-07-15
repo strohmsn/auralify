@@ -24,7 +24,10 @@ var player = new Vue({
 		cadence: [],
 		notesToPlay: [],
 
+		playedNotes: [],
+
 		degrees: [],
+		showDegrees: true,
 
 		running: false
 	},
@@ -102,6 +105,7 @@ var player = new Vue({
 				MIDI.noteOn(0, noteToPlay.value, velocity, 0);
 				this.degrees[noteToPlay.degree - 1].active = true;
 				console.log("Playing note " + noteToPlay.name);
+				this.playedNotes.push(noteToPlay);
 			}
 
 			setTimeout(() => {
@@ -141,6 +145,7 @@ var player = new Vue({
 			this.degrees = this.calculateScale(1);
 
 			this.notesToPlay = this.cadence;
+			this.playedNotes = [];
 
 			// Add rest
 			this.notesToPlay.push(null);

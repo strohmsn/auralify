@@ -69,13 +69,19 @@
 			<input id="bpm-input" type="range" min="25" max="200" v-model="bpm" class="form-control" />
 			<span class="form-control text-center">{{ bpm }} BPM</span>
 		</div>
+		<div class="row mt-3">
+			<div class="form-check form-check-inline">
+				<input id="degrees-check" type="checkbox" v-model="showDegrees" class="form-check-input"/>
+				<label for="degrees-check" class="form-check-label">Show scale degrees</label>
+			</div>
+		</div>
 
 		<div class="row mt-4">
 			<button type="button" class="btn btn-primary btn-block" v-if="!running" v-on:click="start">Start</button>
 			<button type="button" class="btn btn-primary btn-block" v-if="running" v-on:click="stop">Stop</button>
 		</div>
 
-		<div class="row no-gutters">
+		<div class="row no-gutters" v-if="showDegrees">
 			<div v-for="note in degrees" class="col">
 				<div class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
 					<div class="card-body">
@@ -85,6 +91,10 @@
 				</div>
 			</div>
 		</div>
+
+		<ul v-for="note in playedNotes" v-if="!running" class="mt-4">
+			<li>Degree: {{ note.degree }} - Name: {{ note.name }}</li>
+		</ul>
 	</div>
 
 	<script src="midi-scales-player.js"></script>
