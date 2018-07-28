@@ -136,6 +136,16 @@ var player = new Vue({
 				this.notesToPlay.push(this.getRandomNoteFromScale());
 			}
 		},
+		playSingleNote: function(noteToPlay) {
+			this.degrees[noteToPlay.degree - 1].active = true;
+			MIDI.noteOn(0, noteToPlay.value, velocity, 0);
+			console.log("Manually playing note " + noteToPlay.name);
+
+			setTimeout(() => {
+				MIDI.noteOff(0, noteToPlay.value, 0);
+				this.degrees[noteToPlay.degree - 1].active = false;
+			}, this.speed);
+		},
 		start: function() {
 			console.log("Started");
 			this.running = true;

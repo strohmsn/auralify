@@ -83,7 +83,7 @@
 
 		<div class="row no-gutters" v-if="showDegrees">
 			<div v-for="note in degrees" class="col">
-				<div class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }">
+				<div class="card mx-1 mt-3 note text-white" v-bind:class="{ 'bg-secondary': !note.active, 'bg-success': note.active }" v-on:click="playSingleNote(note)">
 					<div class="card-body">
 						<h4 class="card-title text-center">{{ note.degree }}</h4>
 						<p class="card-text text-center">{{ note.name }}</p>
@@ -99,7 +99,7 @@
 
 	<script src="midi-scales-player.js"></script>
 	<script type="text/javascript">
-		var volume = 127;
+		var volume = 200;
 		var bpm = 40;
 		var velocity = 127;
 		player.init({
