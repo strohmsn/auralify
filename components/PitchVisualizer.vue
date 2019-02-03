@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <h1>Pitch Visualizer</h1>
+      <h2>Pitch Visualizer</h2>
     </div>
   </div>
 </template>

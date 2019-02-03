@@ -7,3 +7,6 @@ midi-js*
 
 # Temporary bundle
 bundle.js.tmp*
+
+# Dist folder
+dist*

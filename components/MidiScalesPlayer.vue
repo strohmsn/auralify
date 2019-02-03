@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <h1>MIDI Scales Player</h1>
+      <h2>MIDI Scales Player</h2>
     </div>
     <div class="row mt-3">
       <label for="root-note-select">Root note:</label>

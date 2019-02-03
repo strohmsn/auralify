@@ -34,12 +34,17 @@
 
 <body>
   <div id="app" class="container px-4">
-		<router-link to="/midi-scales-player">MIDI Scales Player</router-link>
-		<router-link to="/pitch-visualizer">Pitch Visualizer</router-link>
-		<router-view></router-view>
+		<nav class="navbar navbar-expand-sm bg-light">
+			<ul class="navbar-nav">
+				<li class="nav-item"><router-link class="nav-link" to="/midi-scales-player">MIDI Scales Player</router-link></li>
+				<li class="nav-item"><router-link class="nav-link" to="/pitch-visualizer">Pitch Visualizer</router-link></li>
+			</ul>
+		</nav>
+
+		<router-view class="mt-4"></router-view>
 	</div>
 
-	<script src="bundle.js"></script>
+	<script src="dist/bundle.js"></script>
 </body>
 
 </html>

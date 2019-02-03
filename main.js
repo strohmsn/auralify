@@ -1,8 +1,8 @@
 // Routing takes place here
 var Vue = require("vue");
 var VueRouter = require("vue-router");
-var MidiScalesPlayer = require("./MidiScalesPlayer.vue");
-var PitchVisualizer = require("./PitchVisualizer.vue");
+var MidiScalesPlayer = require("./components/MidiScalesPlayer.vue");
+var PitchVisualizer = require("./components/PitchVisualizer.vue");
 Vue.use(VueRouter);
 
 const routes = [
