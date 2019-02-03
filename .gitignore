@@ -4,3 +4,6 @@ npm-debug.log
 
 # MIDI.js
 midi-js*
+
+# Temporary bundle
+bundle.js.tmp*
