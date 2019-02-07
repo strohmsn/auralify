@@ -64,7 +64,11 @@
 <script>
 module.exports = {
   created() {
+    console.log("Midi scales player created.");
     this.init({ volume: 127, velocity: 127, bpm: 45 });
+  },
+  beforeDestroy() {
+    console.log("Before midi scales player is destroyed.");
   },
   data: function() {
     return {
