@@ -24,13 +24,10 @@
   "homepage": "https://github.com/strohmsn/auralify#readme",
   "dependencies": {
     "bootstrap": "^4.2.1",
-    "pitchfinder": "^2.0.9",
-    "vue": "^2.5.16"
-  },
-  "browser": {
-    "vue": "vue/dist/vue.js"
+    "pitchfinder": "^2.0.9"
   },
   "devDependencies": {
-    "vueify": "^9.4.1"
+    "webpack": "^4.30.0",
+    "webpack-dev-server": "^3.3.1"
   }
 }
