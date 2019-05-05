@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row">
+    <div>
       <h2>MIDI Scales Player</h2>
     </div>
     <div class="row mt-3">
@@ -40,8 +40,12 @@
     </div>
 
     <div class="row mt-4">
-      <button type="button" class="btn btn-primary btn-block" v-if="!running" v-on:click="start">Start</button>
-      <button type="button" class="btn btn-primary btn-block" v-if="running" v-on:click="stop">Stop</button>
+      <button type="button" class="btn btn-primary btn-block" v-if="initialized && !running" v-on:click="start">Start</button>
+      <button type="button" class="btn btn-primary btn-block" v-if="initialized && running" v-on:click="stop">Stop</button>
+      <button type="button" class="btn btn-primary btn-block" disabled v-if="!initialized">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+      </button>
     </div>
 
     <div class="row no-gutters" v-if="showDegrees">
@@ -100,6 +104,7 @@ module.exports = {
       degrees: [],
       showDegrees: true,
 
+      initialized: false,
       running: false
     }
   },
@@ -130,6 +135,7 @@ module.exports = {
         },
         onsuccess: () => {
           console.log("Init success!");
+          this.initialized = true;
           MIDI.setVolume(0, this.volume);
 
           if (typeof(afterInit)  === "function") {
