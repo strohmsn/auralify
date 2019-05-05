@@ -8,7 +8,8 @@ Vue.use(VueRouter);
 
 const routes = [
   { path: "/midi-scales-player", component: MidiScalesPlayer },
-  { path: "/pitch-visualizer", component: PitchVisualizer }
+  { path: "/pitch-visualizer", component: PitchVisualizer },
+  { path: "*", component: MidiScalesPlayer }
 ]
 
 const router = new VueRouter({
