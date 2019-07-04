@@ -20,7 +20,7 @@
       </select>
     </div>
     <div class="row mt-3">
-      <label for="scale-select">Scale:</label>
+      <label for="scale-select">Scale or mode:</label>
       <select id="scale-select" v-model="selectedScaleIntervals" @change="stop" class="form-control">
         <option v-for="scaleInterval in scaleIntervalsList" v-bind:value="scaleInterval.intervals">
           {{ scaleInterval.name }}
@@ -79,11 +79,12 @@ module.exports = {
       rootNotes: [], // the possible root notes for the scale
       octavesList: [1, 2, 3, 4], // the number of octaves for the scale
 
-      scaleIntervalsList: [ // selectable scales
+      scaleIntervalsList: [ // selectable scales or modes
         { name: "Major", intervals: [2, 2, 1, 2, 2, 2, 1] },
         { name: "Natural minor", intervals: [2, 1, 2, 2, 1, 2, 2] },
         { name: "Harmonic minor", intervals: [2, 1, 2, 2, 1, 3, 1] },
         { name: "Melodic minor", intervals: [2, 1, 2, 2, 2, 2, 1] },
+        { name: "Dorian", intervals: [2, 1, 2, 2, 2, 1, 2] },
         { name: "Phrygian", intervals: [1, 2, 2, 2, 1, 2, 2] }
       ],
 
