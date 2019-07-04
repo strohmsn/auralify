@@ -58,10 +58,6 @@
         </div>
       </div>
     </div>
-
-    <ul v-for="note in playedNotes" v-if="!running" class="mt-4">
-      <li>Degree: {{ note.degree }} - Name: {{ note.name }}</li>
-    </ul>
   </div>
 </template>
 
@@ -98,8 +94,6 @@ module.exports = {
       scale: [],
       cadence: [],
       notesToPlay: [],
-
-      playedNotes: [],
 
       degrees: [],
       showDegrees: true,
@@ -183,7 +177,6 @@ module.exports = {
         MIDI.noteOn(0, noteToPlay.value, this.velocity, 0);
         this.degrees[noteToPlay.degree - 1].active = true;
         console.log("Playing note " + noteToPlay.name);
-        this.playedNotes.push(noteToPlay);
       }
 
       setTimeout(() => {
@@ -225,7 +218,7 @@ module.exports = {
       }, this.speed);
     },
     start: function() {
-      console.log("Started");
+      console.log("Playback started");
       this.running = true;
 
       this.cadence = this.calculateCadence();
@@ -236,7 +229,6 @@ module.exports = {
       this.degrees.pop();
 
       this.notesToPlay = this.cadence;
-      this.playedNotes = [];
 
       // Add rest
       this.notesToPlay.push(null);
@@ -247,7 +239,7 @@ module.exports = {
     },
     stop: function() {
       this.running = false;
-      console.log("Stopped");
+      console.log("Playback stopped");
     }
   }
 }
